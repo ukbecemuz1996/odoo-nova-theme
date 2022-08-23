@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="nova_project_tree_view" model="ir.ui.view">
+        <field name="name">nova.project.tree</field>
+        <field name="model">nova.project</field>
+        <field name="arch" type="xml">
+            <tree string="Projects">
+                <field name="title"/>
+                <field name="client"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+    <record id="nova_project_category_tree_view" model="ir.ui.view">
+        <field name="name">nova.project.category.tree</field>
+        <field name="model">nova.project.category</field>
+        <field name="arch" type="xml">
+            <tree string="Categories">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="nova_project_form_view" model="ir.ui.view">
+        <field name="name">nova.project.form</field>
+        <field name="model">nova.project</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Project">
+                <sheet>
+                    <group>
+                        <field name="title" required="True" />
+                    </group>
+                    <group>
+                        <group>
+                            <field name="category_id" required="True" />
+                            <field name="client" required="True" />
+                            <field name="date" required="True" />
+                            <field name="url" />
+                        </group>
+                        <group>
+                            <field name="cover_image" widget="image" class="oe_avatar" options="{'preview_image': 'cover_image'}" />
+                            <field name="tag_ids" required="True" widget="many2many_tags" />
+                        </group>
+                        <group string="Extra Project Media">
+                            <group>
+                                <field name="project_image_ids" mode="kanban" add-label="Add a Media" nolabel="1" />
+                            </group>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" required="True" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="nova_project_category_form_view" model="ir.ui.view">
+        <field name="name">nova.project.category.form</field>
+        <field name="model">nova.project.category</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Project Category">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="True" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="nova_project_action" model="ir.actions.act_window">
+        <field name="name">Nova Project</field>
+        <field name="res_model">nova.project</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="nova_project_category_action" model="ir.actions.act_window">
+        <field name="name">Nova Project Category</field>
+        <field name="res_model">nova.project.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="nova_project_image_form_view" model="ir.ui.view">
+        <field name="name">nova.project.image.form</field>
+        <field name="model">nova.project.image</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Project Image">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="image_1920" widget="image" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="nova_project_image_kanban_view" model="ir.ui.view">
+        <field name="name">nova.project.image.kanban</field>
+        <field name="model">nova.project.image</field>
+        <field name="arch" type="xml">
+            <kanban string="Project Images">
+                <field name="id"/>
+                <field name="image_1920"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="card oe_kanban_global_click p-0">
+                            <div class="o_squared_image">
+                                <t t-set="foo" t-value="record"/>
+                                <t t-log="foo"/>
+                                <img class="card-img-top" t-att-src="kanban_image('nova.project.image', 'image_1920', record.id.raw_value)"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <menuitem id="nova_project_menu_root" name="Projects" parent="nova_menu_root" groups="base.group_erp_manager,base.group_user" />
+    <menuitem id="nova_project_menu_project" name="Project" parent="nova_project_menu_root" action="nova_project_action" groups="base.group_erp_manager,base.group_user" />
+    <menuitem id="nova_project_menu_project_category" name="Category" parent="nova_project_menu_root" action="nova_project_category_action" groups="base.group_erp_manager,base.group_user" />
+</odoo>

@@ -1,0 +1,797 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="portfolios">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <!-- ======= Breadcrumbs ======= -->
+                <div class="breadcrumbs d-flex align-items-center" style="background-image: url('theme_nova/static/img/portfolio-header.jpg');">
+                    <div class="container position-relative d-flex flex-column align-items-center">
+                        <h2>Portfolio</h2>
+                        <ol>
+                            <li>
+                                <a href="/">Home</a>
+                            </li>
+                            <li>Portfolio</li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- End Breadcrumbs -->
+                <!-- ======= Portfolio Section ======= -->
+                <section id="portfolio" class="portfolio">
+                    <div class="container" data-aos="fade-up">
+                        <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order">
+                            <ul class="portfolio-flters" data-aos="fade-up" data-aos-delay="100">
+                                <li data-filter="*" class="filter-active">All</li>
+                                <t t-foreach="tags" t-as="tag">
+                                    <li t-attf-data-filter=".filter-{{tag.name}}">
+                                        <t t-esc="tag.name" />
+                                    </li>
+                                </t>
+                            </ul>
+                            <!-- End Portfolio Filters -->
+                            <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="300">
+                                <t t-foreach="projects" t-as="project">
+                                    <t t-log="project"/>
+                                    <div t-attf-class="col-lg-4 mb-4 col-md-6 portfolio-item {{project.tag_ids_class}}">
+                                        <t t-set="image_url" t-valuef="/web/image?model=nova.project&amp;id={{project.id}}&amp;field=cover_image" />
+                                        <img t-attf-src="{{image_url}}" class="img-fluid" alt="" />
+                                        <div class="portfolio-info">
+                                            <h4>
+                                                <t t-esc="project.title" />
+                                            </h4>
+                                            <!-- <p>Lorem ipsum, dolor sit amet consectetur</p> -->
+                                            <a t-attf-href="{{image_url}}" t-attf-title="{{project.title}}" data-gallery="portfolio-gallery-app" class="glightbox preview-link">
+                                                <i class="bi bi-zoom-in"></i>
+                                            </a>
+                                            <a t-attf-href="/portfolios/{{project.website_url}}" title="More Details" class="details-link">
+                                                <i class="bi bi-link-45deg"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- End Portfolio Item -->
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="oe_structure"></div>
+            </div>
+        </t>
+    </template>
+    <template id="portfolio">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <!-- ======= Breadcrumbs ======= -->
+                <div class="breadcrumbs d-flex align-items-center" style="background-image: url('/theme_nova/static/img/portfolio-header.jpg');">
+                    <div class="container position-relative d-flex flex-column align-items-center">
+                        <h2>
+                            <t t-esc="project.title" />
+                        </h2>
+                        <ol>
+                            <li>
+                                <a href="/">Home</a>
+                            </li>
+                            <li>
+                                <a href="/portfolios">Portfolios</a>
+                            </li>
+                            <li>
+                                <t t-esc="project.title" />
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- End Breadcrumbs -->
+                <!-- ======= Portfolio Details Section ======= -->
+                <section id="portfolio-details" class="portfolio-details">
+                    <div class="container" data-aos="fade-up">
+                        <div class="row gy-4">
+                            <div class="col-lg-8">
+                                <div class="slides-1 portfolio-details-slider swiper">
+                                    <div class="swiper-wrapper align-items-center">
+                                        <div class="swiper-slide">
+                                            <img t-attf-src="/web/image?model=nova.project&amp;id={{project.id}}&amp;field=cover_image" alt=""/>
+                                        </div>
+                                        <t t-foreach="project.project_image_ids" t-as="one_image">
+                                            <div class="swiper-slide">
+                                                <img t-attf-src="/web/image?model=nova.project.image&amp;id={{one_image.id}}&amp;field=image_1920" alt=""/>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="portfolio-info">
+                                    <h3>Project information</h3>
+                                    <ul>
+                                        <li>
+                                            <strong>Category</strong>:
+                                            <t t-esc="project.category_id.name" />
+                                        </li>
+                                        <li>
+                                            <strong>Client</strong>:
+                                            <t t-esc="project.client" />
+                                        </li>
+                                        <li>
+                                            <strong>Project date</strong>:
+                                            <t t-esc="project.date" />
+                                        </li>
+                                        <li>
+                                            <strong>Project URL</strong>:
+                                            <a t-attf-href="{{project.url}}">
+                                                <t t-esc="project.url" />
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="portfolio-description">
+                                    <t t-raw="project.description" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="oe_structure"></div>
+            </div>
+        </t>
+    </template>
+    <template id="team">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <!-- ======= Breadcrumbs ======= -->
+                <div class="breadcrumbs d-flex align-items-center" style="background-image: url('theme_nova/static/img/team-header.jpg');">
+                    <div class="container position-relative d-flex flex-column align-items-center">
+                        <h2>Team</h2>
+                        <ol>
+                            <li>
+                                <a href="/">Home</a>
+                            </li>
+                            <li>Team</li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- End Breadcrumbs -->
+                <!-- ======= Team Section ======= -->
+                <section id="team" class="team">
+                    <div class="container" data-aos="fade-up">
+                        <div class="section-header">
+                            <h2>Our Team</h2>
+                        </div>
+                        <div class="row gy-4">
+                            <t t-foreach="team" t-as="person">
+                                <t t-call="theme_nova.team_members" />
+                            </t>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+    <template id="team_members">
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="team-member">
+                <div class="member-img">
+                    <img t-attf-src="/web/image?model=nova.team&amp;id={{person.id}}&amp;field=image_1920" class="img-fluid" alt="" />
+                    <div class="social">
+                        <a t-attf-href="{{person.twitter_link if person.twitter_link else '#'}}">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                        <a t-attf-href="{{person.facebook_link if person.facebook_link else '#'}}">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a t-attf-href="{{person.instagram_link if person.instagram_link else '#'}}">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a t-attf-href="{{person.linkedin_link if person.linkedin_link else '#'}}">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <t t-set="full_name" t-valuef="{{person.first_name}} {{person.last_name}}" />
+                    <h4>
+                        <t t-esc="full_name" />
+                    </h4>
+                    <span>
+                        <t t-esc="person.position_id.name" />
+                    </span>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="about_us">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <!-- ======= Breadcrumbs ======= -->
+                <div class="breadcrumbs d-flex align-items-center" style="background-image: url('/theme_nova/static/img/about-header.jpg');">
+                    <div class="container position-relative d-flex flex-column align-items-center">
+                        <h2>About</h2>
+                        <ol>
+                            <li>
+                                <a href="/">Home</a>
+                            </li>
+                            <li>About</li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- End Breadcrumbs -->
+                <!-- ======= About Section ======= -->
+                <section id="about" class="about">
+                    <div class="container" data-aos="fade-up">
+                        <div class="row gy-4" data-aos="fade-up">
+                            <div class="col-lg-4">
+                                <img src="/theme_nova/static/img/about.jpg" class="img-fluid" alt="" />
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="content ps-lg-5">
+                                    <h3>Voluptatem dignissimos provident quasi</h3>
+                                    <p>
+                                        Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                                        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <i class="bi bi-check-circle-fill"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                        </li>
+                                        <li>
+                                            <i class="bi bi-check-circle-fill"></i> Duis aute irure dolor in reprehenderit in voluptate velit.
+                                        </li>
+                                        <li>
+                                            <i class="bi bi-check-circle-fill"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End About Section -->
+                <!-- ======= Why Choose Us Section ======= -->
+                <section id="why-us" class="why-us">
+                    <div class="container" data-aos="fade-up">
+                        <div class="section-header">
+                            <h2>Why Choose Us</h2>
+                        </div>
+                        <div class="row g-0" data-aos="fade-up" data-aos-delay="200">
+                            <div class="col-xl-5 img-bg" style="background-image: url('/theme_nova/static/img/why-us-bg.jpg')"></div>
+                            <div class="col-xl-7 slides  position-relative">
+                                <div class="slides-1 swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <div class="item">
+                                                <h3 class="mb-3">Let's grow your business together</h3>
+                                                <h4 class="mb-3">Optio reiciendis accusantium iusto architecto at quia minima maiores quidem, dolorum.</h4>
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, ipsam perferendis asperiores explicabo vel tempore velit totam, natus nesciunt accusantium dicta quod quibusdam ipsum maiores nobis non, eum. Ullam reiciendis dignissimos laborum aut, magni voluptatem velit doloribus quas sapiente optio.</p>
+                                            </div>
+                                        </div>
+                                        <!-- End slide item -->
+                                        <div class="swiper-slide">
+                                            <div class="item">
+                                                <h3 class="mb-3">Unde perspiciatis ut repellat dolorem</h3>
+                                                <h4 class="mb-3">Amet cumque nam sed voluptas doloribus iusto. Dolorem eos aliquam quis.</h4>
+                                                <p>Dolorem quia fuga consectetur voluptatem. Earum consequatur nulla maxime necessitatibus cum accusamus. Voluptatem dolorem ut numquam dolorum delectus autem veritatis facilis. Et ea ut repellat ea. Facere est dolores fugiat dolor.</p>
+                                            </div>
+                                        </div>
+                                        <!-- End slide item -->
+                                        <div class="swiper-slide">
+                                            <div class="item">
+                                                <h3 class="mb-3">Aliquid non alias minus</h3>
+                                                <h4 class="mb-3">Necessitatibus voluptatibus explicabo dolores a vitae voluptatum.</h4>
+                                                <p>Neque voluptates aut. Soluta aut perspiciatis porro deserunt. Voluptate ut itaque velit. Aut consectetur voluptatem aspernatur sequi sit laborum. Voluptas enim dolorum fugiat aut.</p>
+                                            </div>
+                                        </div>
+                                        <!-- End slide item -->
+                                        <div class="swiper-slide">
+                                            <div class="item">
+                                                <h3 class="mb-3">Necessitatibus suscipit non voluptatem quibusdam</h3>
+                                                <h4 class="mb-3">Tempora quos est ut quia adipisci ut voluptas. Deleniti laborum soluta nihil est. Eum similique neque autem ut.</h4>
+                                                <p>Ut rerum et autem vel. Et rerum molestiae aut sit vel incidunt sit at voluptatem. Saepe dolorem et sed voluptate impedit. Ad et qui sint at qui animi animi rerum.</p>
+                                            </div>
+                                        </div>
+                                        <!-- End slide item -->
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+                                </div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Why Choose Us Section -->
+                <!-- ======= Call To Action Section ======= -->
+                <section id="call-to-action" class="call-to-action">
+                    <div class="container" data-aos="fade-up">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6 text-center">
+                                <h3>Ut fugiat aliquam aut non</h3>
+                                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+                                <a class="cta-btn" href="#">Call To Action</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Call To Action Section -->
+                <!-- ======= Team Section ======= -->
+                <section id="team" class="team">
+                    <div class="container" data-aos="fade-up">
+                        <div class="section-header">
+                            <h2>Our Team</h2>
+                        </div>
+                        <div class="row gy-4">
+                            <t t-foreach="team" t-as="person">
+                                <t t-call="theme_nova.team_members" />
+                            </t>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Team Section -->
+            </div>
+        </t>
+    </template>
+    <template id="services">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <!-- ======= Breadcrumbs ======= -->
+                <div class="breadcrumbs d-flex align-items-center" style="background-image: url('/theme_nova/static/img/services-header.jpg');">
+                    <div class="container position-relative d-flex flex-column align-items-center">
+                        <h2>Services</h2>
+                        <ol>
+                            <li>
+                                <a href="/">Home</a>
+                            </li>
+                            <li>Services</li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- End Breadcrumbs -->
+                <section id="services-list" class="services-list">
+                    <div class="container" data-aos="fade-up">
+                        <div class="section-header">
+                            <h2>Our Services</h2>
+                        </div>
+                        <div class="row gy-5">
+                            <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="100">
+                                <div class="icon flex-shrink-0">
+                                    <i class="bi bi-briefcase" style="color: #f57813;"></i>
+                                </div>
+                                <div>
+                                    <h4 class="title">
+                                        <a href="#" class="stretched-link">Lorem Ipsum</a>
+                                    </h4>
+                                    <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+                                </div>
+                            </div>
+                            <!-- End Service Item -->
+                            <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                                <div class="icon flex-shrink-0">
+                                    <i class="bi bi-card-checklist" style="color: #15a04a;"></i>
+                                </div>
+                                <div>
+                                    <h4 class="title">
+                                        <a href="#" class="stretched-link">Dolor Sitema</a>
+                                    </h4>
+                                    <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
+                                </div>
+                            </div>
+                            <!-- End Service Item -->
+                            <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                                <div class="icon flex-shrink-0">
+                                    <i class="bi bi-bar-chart" style="color: #d90769;"></i>
+                                </div>
+                                <div>
+                                    <h4 class="title">
+                                        <a href="#" class="stretched-link">Sed ut perspiciatis</a>
+                                    </h4>
+                                    <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+                                </div>
+                            </div>
+                            <!-- End Service Item -->
+                            <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                                <div class="icon flex-shrink-0">
+                                    <i class="bi bi-binoculars" style="color: #15bfbc;"></i>
+                                </div>
+                                <div>
+                                    <h4 class="title">
+                                        <a href="#" class="stretched-link">Magni Dolores</a>
+                                    </h4>
+                                    <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                                </div>
+                            </div>
+                            <!-- End Service Item -->
+                            <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="500">
+                                <div class="icon flex-shrink-0">
+                                    <i class="bi bi-brightness-high" style="color: #f5cf13;"></i>
+                                </div>
+                                <div>
+                                    <h4 class="title">
+                                        <a href="#" class="stretched-link">Nemo Enim</a>
+                                    </h4>
+                                    <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
+                                </div>
+                            </div>
+                            <!-- End Service Item -->
+                            <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="600">
+                                <div class="icon flex-shrink-0">
+                                    <i class="bi bi-calendar4-week" style="color: #1335f5;"></i>
+                                </div>
+                                <div>
+                                    <h4 class="title">
+                                        <a href="#" class="stretched-link">Eiusmod Tempor</a>
+                                    </h4>
+                                    <p class="description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>
+                                </div>
+                            </div>
+                            <!-- End Service Item -->
+                        </div>
+                    </div>
+                </section>
+                <!-- End Our Services Section -->
+                <!-- ======= Services Cards Section ======= -->
+                <section id="services-cards" class="services-cards">
+                    <div class="container" data-aos="fade-up">
+                        <div class="row gy-4">
+                            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                                <div class="card-item">
+                                    <div class="row">
+                                        <div class="col-xl-5">
+                                            <div class="card-bg" style="background-image: url(/theme_nova/static/img/cards-1.jpg);"></div>
+                                        </div>
+                                        <div class="col-xl-7 d-flex align-items-center">
+                                            <div class="card-body">
+                                                <h4 class="card-title">Eligendi omnis sunt veritatis.</h4>
+                                                <p>Fuga in dolorum et iste et culpa. Commodi possimus nesciunt modi voluptatem placeat deleniti adipisci. Cum delectus doloribus non veritatis. Officia temporibus illo magnam. Dolor eos et.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Card Item -->
+                            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                                <div class="card-item">
+                                    <div class="row">
+                                        <div class="col-xl-5">
+                                            <div class="card-bg" style="background-image: url(/theme_nova/static/img/cards-2.jpg);"></div>
+                                        </div>
+                                        <div class="col-xl-7 d-flex align-items-center">
+                                            <div class="card-body">
+                                                <h4 class="card-title">Possimus ut sed velit assumenda</h4>
+                                                <p>Sunt deserunt maiores voluptatem autem est rerum perferendis rerum blanditiis. Est laboriosam qui iste numquam laboriosam voluptatem architecto. Est laudantium sunt at quas aut hic. Eum dignissimos.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Card Item -->
+                            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+                                <div class="card-item">
+                                    <div class="row">
+                                        <div class="col-xl-5">
+                                            <div class="card-bg" style="background-image: url(/theme_nova/static/img/cards-3.jpg);"></div>
+                                        </div>
+                                        <div class="col-xl-7 d-flex align-items-center">
+                                            <div class="card-body">
+                                                <h4 class="card-title">Error beatae dolor inventore aut</h4>
+                                                <p>Dicta porro nobis. Velit cum in. Nesciunt dignissimos enim molestiae facilis numquam quae quaerat ipsam omnis. Neque debitis ipsum at architecto officia laboriosam odit. Ut sunt temporibus nulla culpa.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Card Item -->
+                            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+                                <div class="card-item">
+                                    <div class="row">
+                                        <div class="col-xl-5">
+                                            <div class="card-bg" style="background-image: url(/theme_nova/static/img/cards-4.jpg);"></div>
+                                        </div>
+                                        <div class="col-xl-7 d-flex align-items-center">
+                                            <div class="card-body">
+                                                <h4 class="card-title">Expedita voluptas ut ut nesciunt</h4>
+                                                <p>Aut est quidem doloremque voluptatem magnam quis excepturi vero quia. Eum eos doloremque architecto illo at beatae dolore. Fugiat suscipit et sint ratione dolores. Aut aliquid ea dolores libero nobis.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Card Item -->
+                        </div>
+                    </div>
+                </section>
+                <!-- End Services Cards Section -->
+                <!-- ======= Testimonials Section ======= -->
+                <section id="testimonials" class="testimonials">
+                    <div class="container" data-aos="fade-up">
+                        <div class="section-header">
+                            <h2>Testimonials</h2>
+                        </div>
+                        <div class="slides-3 swiper" data-aos="fade-up" data-aos-delay="100">
+                            <div class="swiper-wrapper">
+                                <t t-foreach="testimonials" t-as="testimonial">
+                                    <t t-call="theme_nova.testimonial_item" /> 
+                                </t>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+    <template id="testimonial_item">
+        <div class="swiper-slide">
+            <div class="testimonial-item">
+                <div class="stars">
+                    <t t-if="testimonial.rate == '1'">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </t>
+                    <t t-elif="testimonial.rate == '2'">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </t>
+                    <t t-elif="testimonial.rate == '3'">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </t>
+                    <t t-elif="testimonial.rate == '4'">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star"></i>
+                    </t>
+                    <t t-elif="testimonial.rate == '5'">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </t>
+                    <t t-else="">
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </t>
+                </div>
+                <p>
+                    <t t-raw="testimonial.comment" />
+                </p>
+                <div class="profile mt-auto">
+                    <img t-attf-src="/web/image?model=nova.testimonial&amp;id={{testimonial.id}}&amp;field=image_1920" class="testimonial-img" alt=""/>
+                    <t t-set="full_name" t-valuef="{{testimonial.first_name}} {{testimonial.last_name}}" />
+                    <h3>
+                        <t t-esc="full_name"/>
+                    </h3>
+                    <h4>
+                        <t t-esc="testimonial.position"/>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="blog">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <!-- ======= Breadcrumbs ======= -->
+                <div class="breadcrumbs d-flex align-items-center" style="background-image: url('/theme_nova/static/img/blog-header.jpg');">
+                    <div class="container position-relative d-flex flex-column align-items-center">
+                        <h2>Blog</h2>
+                        <ol>
+                            <li>
+                                <a href="/">Home</a>
+                            </li>
+                            <li>Blog</li>
+                        </ol>
+                        <t t-if="q">
+                            <h6 style="color:#fff">Search :<t t-esc="q" /></h6>
+                        </t>
+                        <t t-if="category">
+                            <h6 style="color:#fff">Category :<t t-esc="category.name" /></h6>
+                        </t>
+                        <t t-if="tag">
+                            <h6 style="color:#fff">Tag :<t t-esc="tag.name" /></h6>
+                        </t>
+                        
+                    </div>
+                </div>
+                <!-- End Breadcrumbs -->
+                <section id="blog" class="blog">
+                    <div class="container" data-aos="fade-up">
+                        <div class="row g-5">
+                            <t t-if="post">
+                                <t t-call="theme_nova.post_details" />
+                            </t>
+                            <t t-else="">
+                                <t t-call="theme_nova.blog_posts" />
+                            </t>
+                            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                                <div class="sidebar ps-lg-4">
+                                    <div class="sidebar-item search-form">
+                                        <h3 class="sidebar-title">Search</h3>
+                                        <form id="search_form" method="post"  class="mt-3">
+                                            <input type="text" name="q" t-att-value="q" />
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <button type="submit">
+                                                <i class="bi bi-search"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <!-- End sidebar search formn-->
+                                    <div class="sidebar-item categories">
+                                        <h3 class="sidebar-title">Categories</h3>
+                                        <ul class="mt-3">
+                                            <t t-foreach="categories" t-as="category">
+                                                <li>
+                                                    <a t-attf-href="/blog/category/{{category.id}}">
+                                                        <t t-esc="category.name" />
+                                                        <span>(<t t-esc="category.posts_count" />)</span>
+                                                    </a>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                    <!-- End sidebar categories-->
+                                    <div class="sidebar-item recent-posts">
+                                        <h3 class="sidebar-title">Recent Posts</h3>
+                                        <div class="mt-3">
+                                            <t t-foreach="resent_posts" t-as="post">
+                                                <div class="post-item mt-3">
+                                                    <img t-attf-src="/web/image?model=nova.blog.post&amp;id={{post.id}}&amp;field=image_1920" alt="" class="flex-shrink-0"/>
+                                                    <div>
+                                                        <h4>
+                                                            <a t-attf-href="/blog/post/{{post.id}}">
+                                                                <t t-esc="post.title"/>
+                                                            </a>
+                                                        </h4>
+                                                        <time>
+                                                            <t t-esc="post.date"/>
+                                                        </time>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <!-- End sidebar recent posts-->
+                                    <div class="sidebar-item tags">
+                                        <h3 class="sidebar-title">Tags</h3>
+                                        <ul class="mt-3">
+                                            <t t-foreach="tags" t-as="tag" >
+                                                <li>
+                                                    <a t-attf-href="/blog/tag/{{tag.id}}">
+                                                        <t t-esc="tag.name" />
+                                                    </a>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                    <!-- End sidebar tags-->
+                                </div>
+                                <!-- End Blog Sidebar -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+    <template id="post_item">
+        <div t-attf-class="{{column_classes}} mb-5" >
+            <article class="d-flex flex-column">
+                <div class="post-img">
+                    <img t-attf-src="/web/image?model=nova.blog.post&amp;id={{post.id}}&amp;field=image_1920" alt="" class="img-fluid" />
+                </div>
+                <h2 class="title">
+                    <a t-attf-href="/blog/post/{{post.id}}">
+                        <t t-esc="post.title" />
+                    </a>
+                </h2>
+                <div class="meta-top">
+                    <ul>
+                        <li class="d-flex align-items-center">
+                            <i class="bi bi-person"></i>
+                            <a t-attf-href="/blog/post/{{post.id}}">
+                                <t t-esc="post.user_id.name" />
+                            </a>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <i class="bi bi-clock"></i>
+                            <a t-attf-href="/blog/post/{{post.id}}">
+                                <time datetime="2022-01-01">
+                                    <t t-esc="post.date" />
+                                </time>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="read-more mt-auto align-self-end">
+                    <a t-attf-href="/blog/post/{{post.id}}">Read More
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </article>
+        </div>
+        <!-- End post list item -->
+    </template>
+    <template id="blog_posts">
+        <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+            <div class="row gy-5 posts-list">
+                <t t-foreach="posts" t-as="post">
+                    <t t-call="theme_nova.post_item">
+                        <t t-set="column_classes">col-lg-6</t>
+                    </t>
+                </t>
+                <t t-if="len(posts) == 0">
+                    <h2>No Posts</h2>
+                </t>
+            </div>
+            <div class="blog-pagination d-flex justify-content-center">
+                <t t-call="website.pager" />
+            </div>
+            <!-- End blog pagination -->
+        </div>
+    </template>
+    <template id="post_details">
+        <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+            <article class="blog-details">
+                <div class="post-img">
+                    <img t-attf-src="/web/image?model=nova.blog.post&amp;id={{post.id}}&amp;field=image_1920" alt="" class="img-fluid"/>
+                </div>
+                <h2 class="title">
+                    <t t-esc="post.title" />
+                </h2>
+                <div class="meta-top">
+                    <ul>
+                        <li class="d-flex align-items-center">
+                            <i class="bi bi-person">
+                                <t t-esc="post.user_id.name" />
+                            </i>
+                            <a href="#"></a>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <i class="bi bi-clock"></i>
+                            <a href="#">
+                                <time><t t-esc="post.date" /></time>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End meta top -->
+                <div class="content">
+                    <t t-raw="post.content" />
+                </div>
+                <div class="meta-bottom">
+                    <i class="bi bi-folder"></i>
+                    <ul class="cats">
+                        <li>
+                            <a t-attf-href="/blog/category/{{post.category_id.id}}">
+                                <t t-esc="post.category_id.name" />
+                            </a>
+                        </li>
+                    </ul>
+                    <i class="bi bi-tags"></i>
+                    <ul class="tags">
+                        <t t-foreach="post.tag_ids" t-as="tag">
+                            <li>
+                                <a t-attf-href="/blog/tag/{{tag.id}}"><t t-esc="tag.name" /></a>
+                            </li>
+                        </t>
+                    </ul>
+                </div>
+                <!-- End meta bottom -->
+            </article>
+            <!-- End blog post -->
+        </div>
+    </template>
+</odoo>

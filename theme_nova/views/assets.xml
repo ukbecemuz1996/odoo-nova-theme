@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="nova_assets" name="Nova Theme Assets" inherit_id="website.assets_frontend">
+        <xpath expr="link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" ref="theme_nova/static/css/main.css" />
+            <link rel="stylesheet" type="text/scss" ref="theme_nova/static/vendor/aos/aos.css" />
+            <link rel="stylesheet" type="text/scss" ref="theme_nova/static/vendor/bootstrap-icons/bootstrap-icons.css" />
+            <link rel="stylesheet" type="text/scss" ref="theme_nova/static/vendor/glightbox/css/glightbox.min.css" />
+            <link rel="stylesheet" type="text/scss" ref="theme_nova/static/vendor/remixicon/remixicon.css" />
+            <link rel="stylesheet" type="text/scss" ref="theme_nova/static/vendor/swiper/swiper-bundle.min.css" />
+        </xpath>
+        <xpath expr="//div[@id='wrapwrap']/footer" position="after">
+            <script type="text/javascript" src="theme_nova/static/js/main.js" />
+            <script type="text/javascript" src="theme_nova/static/vendor/aos/aos.js" />
+            <script type="text/javascript" src="theme_nova/static/vendor/glightbox/js/glightbox.min.js" />
+            <script type="text/javascript" src="theme_nova/static/vendor/isotope-layout/isotope-layout.min.js" />
+            <script type="text/javascript" src="theme_nova/static/vendor/php-email-form/validate.js" />
+            <script type="text/javascript" src="theme_nova/static/vendor/swiper/swiper-bundle.min.js" />
+        </xpath>
+    </template>
+</odoo>

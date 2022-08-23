@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="nova_blog_post_tree_view" model="ir.ui.view">
+        <field name="name">nova.blog.post.tree</field>
+        <field name="model">nova.blog.post</field>
+        <field name="arch" type="xml">
+            <tree string="Posts">
+                <field name="title"/>
+                <field name="date"/>
+                <field name="category_id"/>
+                <field name="user_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="nova_blog_category_tree_view" model="ir.ui.view">
+        <field name="name">nova.blog.category.tree</field>
+        <field name="model">nova.blog.category</field>
+        <field name="arch" type="xml">
+            <tree string="Categories">
+                <field name="name"/>
+                <field name="posts_count"/>
+            </tree>
+        </field>
+    </record>
+    <record id="nova_blog_post_form_view" model="ir.ui.view">
+        <field name="name">nova.blog.post.form</field>
+        <field name="model">nova.blog.post</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Project">
+                <sheet>
+                    <group>
+                        <field name="title" required="True" />
+                    </group>
+                    <group>
+                        <group>
+                            <field name="category_id" required="True" />
+                            <field name="user_id" />
+                            <field name="date" required="True" />
+                        </group>
+                        <group>
+                            <field name="image_1920" widget="image" class="oe_avatar" />
+                            <field name="tag_ids" required="True" widget="many2many_tags" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="content" placeholder="Enter post description" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="nova_blog_category_form_view" model="ir.ui.view">
+        <field name="name">nova.blog.category.form</field>
+        <field name="model">nova.blog.category</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Post Category">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="True" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="nova_blog_post_action" model="ir.actions.act_window">
+        <field name="name">Nova Blog Post</field>
+        <field name="res_model">nova.blog.post</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="nova_blog_category_action" model="ir.actions.act_window">
+        <field name="name">Nova Blog Category</field>
+        <field name="res_model">nova.blog.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="nova_blog_menu_root" name="Blog" parent="nova_menu_root" groups="base.group_erp_manager,base.group_user" />
+    <menuitem id="nova_blog_menu_post" name="Post" parent="nova_blog_menu_root" action="nova_blog_post_action" groups="base.group_erp_manager,base.group_user" />
+    <menuitem id="nova_blog_menu_category" name="Category" parent="nova_blog_menu_root" action="nova_blog_category_action" groups="base.group_erp_manager,base.group_user" />
+</odoo>

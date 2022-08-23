@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="nova_team_tree_view" model="ir.ui.view">
+        <field name="name">nova.team.list</field>
+        <field name="model">nova.team</field>
+        <field name="arch" type="xml">
+            <tree string="Teams">
+                <field name="first_name"/>
+                <field name="last_name"/>
+                <field name="position_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="nova_team_position_tree_view" model="ir.ui.view">
+        <field name="name">nova.team.position.list</field>
+        <field name="model">nova.team.position</field>
+        <field name="arch" type="xml">
+            <tree string="Positions">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="nova_team_form_view" model="ir.ui.view">
+        <field name="name">nova.team.form</field>
+        <field name="model">nova.team</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Nova Team">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="image_1920" widget="image" />
+                            <field name="first_name" required="True" />
+                            <field name="last_name" required="True" />
+                            <field name="position_id" required="True" />
+                        </group>
+                        <group>
+                            <field name="twitter_link" />
+                            <field name="facebook_link" />
+                            <field name="instagram_link" />
+                            <field name="linkedin_link" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="nova_team_position_form_view" model="ir.ui.view">
+        <field name="name">nova.team.position.form</field>
+        <field name="model">nova.team.position</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Nova Team Position">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="True" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="nova_team_action" model="ir.actions.act_window">
+        <field name="name">Nova Team</field>
+        <field name="res_model">nova.team</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="nova_team_position_action" model="ir.actions.act_window">
+        <field name="name">Nova Team Position</field>
+        <field name="res_model">nova.team.position</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="nova_menu_root" name="Nova App" groups="base.group_erp_manager,base.group_user" />
+    <menuitem id="nova_team_menu_root" name="Teams" parent="nova_menu_root" groups="base.group_erp_manager,base.group_user" />
+    <menuitem id="nova_team_menu_team" name="Teams" parent="nova_team_menu_root" action="nova_team_action" groups="base.group_erp_manager,base.group_user" />
+    <menuitem id="nova_team_menu_team_position" name="Positions" parent="nova_team_menu_root" action="nova_team_position_action" groups="base.group_erp_manager,base.group_user" />
+</odoo>

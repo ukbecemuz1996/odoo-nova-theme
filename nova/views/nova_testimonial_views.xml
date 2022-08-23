@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="nova_testimonial_tree_view" model="ir.ui.view">
+        <field name="name">nova.testimonial.tree</field>
+        <field name="model">nova.testimonial</field>
+        <field name="arch" type="xml">
+            <tree string="Testimonials">
+                <field name="first_name"/>
+                <field name="last_name"/>
+                <field name="position"/>
+            </tree>
+        </field>
+    </record>
+    <record id="nova_testimonial_form_view" model="ir.ui.view">
+        <field name="name">nova.testimonial.form</field>
+        <field name="model">nova.testimonial</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Nova Testimonial">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="image_1920" widget="image" />
+                            <field name="first_name" required="True" />
+                            <field name="last_name" required="True" />
+                            <field name="position" required="True" />
+                            <field name="rate" widget="priority" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="comment" required="True" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="nova_testimonial_kanban_view" model="ir.ui.view">
+        <field name="name">nova.testimonial.kanban</field>
+        <field name="model">nova.testimonial</field>
+        <field name="type">kanban</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="id" />
+                <field name="first_name" />
+                <field name="last_name" />
+                <field name="image_1920" />
+                <field name="position" />
+                <field name="rate" />
+                <field name="comment" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <t t-set="foo" t-value="record" />
+                        <t t-log="foo" />
+                        <div class="oe_kanban_card oe_kanban_global_click oe_kanban_badge oe_kanban_color_white o_kanban_gamification">
+                            <div class="o_kanban_content">
+                                <div class="o_kanban_image">
+                                    <a type="open">
+                                        <img t-att-src="kanban_image('nova.testimonial', 'image_1920', record.id.raw_value)" />
+                                    </a>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <h4 class="mt0 mb0">
+                                        <a class="o_kanban_record_title" type="open">
+                                            <field name="first_name" />
+                                            <field name="last_name" />
+                                        </a>
+                                    </h4>
+                                    <h5>
+                                        <field name="position" />
+                                    </h5>
+                                    <field name="rate" widget="priority" />
+                                    <p>
+                                        <field name="comment" />
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="nova_testimonial_action" model="ir.actions.act_window">
+        <field name="name">Nova Testimonial</field>
+        <field name="res_model">nova.testimonial</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name='type'>ir.actions.act_window</field>
+    </record>
+    <menuitem id="nova_testimonial_menu_root" name="Testimonials" parent="nova_menu_root" groups="base.group_erp_manager,base.group_user" action="nova_testimonial_action"/>
+</odoo>
